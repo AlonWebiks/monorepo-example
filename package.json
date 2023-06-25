@@ -16,8 +16,7 @@
     "nx": "16.4.0"
   },
   "workspaces": [
-    "./packages/services/*",
-    "./packages/libraries/*",
-    "./packages/jobs/*"
+    "./packages/libs/*",
+    "./packages/apps/*"
   ]
 }

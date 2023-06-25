@@ -1,0 +1,41 @@
+FROM node:18-alpine AS meta
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm run deps-meta
+
+RUN npm version --prefix packages/apps/service-a --allow-same-version 1.0.0  
+
+FROM node:18-alpine AS build
+
+WORKDIR /app
+
+COPY  package.json /app/
+
+COPY nx.json /app/nx.json
+
+RUN npm i
+
+COPY --from=meta /app/.deps/packages/libs /app/packages/libs
+
+COPY --from=meta /app/packages/apps/service-a/package.json /app/packages/apps/service-a/package.json
+
+RUN npm i
+
+COPY packages/libs /app/packages/libs
+
+RUN npm run build -- --exclude service-a
+
+COPY --from=meta /app/packages/apps/service-a /app/packages/apps/service-a
+
+RUN npm run bundle -w service-a
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/packages/apps/service-a/dist/ /app/dist
+
+CMD [ "node", "--enable-source-maps", "/app/dist/server.js"]

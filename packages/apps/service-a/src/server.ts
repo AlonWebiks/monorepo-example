@@ -4,7 +4,7 @@ import {funcC} from 'lib-c'
 function start() {
     funcB();
     funcC();
-    console.log('servic-a started');
+    console.log('servic-a started!');
 }
 
 start()

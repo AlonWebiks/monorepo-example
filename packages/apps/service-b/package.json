@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "node --enable-source-maps dist/server.js"
+    "start": "node --enable-source-maps dist/server.js",
+    "bundle": "esbuild src/server.ts --bundle --sourcemap --platform=node --outfile=dist/server.js"
   },
   "keywords": [],
   "author": "",

@@ -21,5 +21,9 @@
   },
   "affected": {
     "defaultBase": "main"
+  },
+  "workspaceLayout": {
+    "appsDir": "packages/apps",
+    "libsDir": "packages/libs"
   }
 }
