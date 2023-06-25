@@ -12,6 +12,11 @@
       "dependsOn": ["^build"],
       "inputs": ["{workspaceRoot}/src"],
       "outputs": ["{workspaceRoot}/dist"]
+    },
+    "bundle": {
+      "dependsOn": ["^build"],
+      "inputs": ["{workspaceRoot}/src"],
+      "outputs": ["{workspaceRoot}/dist"]
     }
   },
   "affected": {

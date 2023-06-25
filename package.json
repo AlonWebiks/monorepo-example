@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "nx run-many -t build",
-    "start": "nx run-many -t start"
+    "start": "nx run-many -t start",
+    "deps-meta": "node ./scripts/deps-meta.js",
+    "docker-build": "nx run-many -t docker-build"
   },
   "keywords": [],
   "author": "",

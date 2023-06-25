@@ -1,21 +1,41 @@
-FROM node:18-alpine as meta
+FROM node:18-alpine AS meta
 
 WORKDIR /app
 
-COPY . /app
+COPY . .
 
 # creates same folder structure as project with only package.json files
-RUN npm run metadata
+RUN npm run deps-meta
 
-FROM node:18-alpine as base
+RUN npm version --prefix packages/services/service-a --allow-same-version 1.0.0  
+
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
-COPY --from=meta /app/.tmp/ /app
+COPY --from=meta /app/.deps/package.json /app/package.json
 
-RUN npm install
+COPY --from=meta /app/.deps/package-lock.json /app/package-lock.json
 
-RUN bundle -- -w service-a
+COPY nx.json /app/nx.json
+
+RUN npm i
+
+COPY --from=meta /app/.deps/packages/libraries /app/packages/libraries
+
+RUN npm i --workspaces
+
+COPY packages/libraries /app/packages/libraries
+
+RUN npm run build
+
+COPY --from=meta /app/.deps/packages/services/service-a/package.json /app/packages/services/service-a/package.json
+
+RUN npm ci --workspaces
+
+COPY packages/services/service-a /app/packages/services/service-a
+
+RUN npx nx run service-a:bundle
 
 FROM node:18-alpine
 
