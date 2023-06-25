@@ -1,0 +1,26 @@
+FROM node:18-alpine as meta
+
+WORKDIR /app
+
+COPY . /app
+
+# creates same folder structure as project with only package.json files
+RUN npm run metadata
+
+FROM node:18-alpine as base
+
+WORKDIR /app
+
+COPY --from=meta /app/.tmp/ /app
+
+RUN npm install
+
+RUN bundle -- -w service-b
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/packages/services/service-b/dist/ /app/dist
+
+CMD [ "node", "--enable-source-maps", "/app/dist/server.js"]
