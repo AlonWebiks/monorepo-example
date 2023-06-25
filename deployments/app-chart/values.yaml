@@ -1,0 +1,6 @@
+mongodb:
+  enabled: true
+appA:
+  enabled: true
+appB:
+  enabled: true

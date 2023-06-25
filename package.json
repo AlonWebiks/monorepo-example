@@ -7,7 +7,10 @@
     "build": "nx run-many -t build",
     "start": "nx run-many -t start",
     "deps-meta": "node ./scripts/deps-meta.js",
-    "docker-build": "nx run-many -t docker-build"
+    "docker-build": "nx run-many -t docker-build",
+    "helm-build": "helm dep build ./deployments/app-chart",
+    "helm-deploy-env-1": "helm upgrade app-chart ./deployments/app-chart -n app-env-1 -f ./deployments/env1-values.yaml",
+    "helm-deploy-env-2": "helm upgrade app-chart ./deployments/app-chart -n app-env-2 -f ./deployments/env2-values.yaml"
   },
   "keywords": [],
   "author": "",

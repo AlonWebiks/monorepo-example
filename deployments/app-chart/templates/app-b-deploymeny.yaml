@@ -1,0 +1,24 @@
+{{ if .Values.appB.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-b
+  labels:
+    app: app-b
+spec:
+  replicas: 
+  selector:
+    matchLabels:
+      app: app-b
+  template:
+    metadata:
+      labels:
+        app: app-b
+    spec:
+      containers:
+      - name: app-b
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+{{ end }}
