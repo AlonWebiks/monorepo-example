@@ -1,21 +1,25 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: app-a
-#   labels:
-#     app: app-a
-# spec:
-#   replicas: 
-#   selector:
-#     matchLabels:
-#       app: app-a
-#   template:
-#     metadata:
-#       labels:
-#         app: app-a
-#     spec:
-#       containers:
-#       - name: app-a
-#         image: nginx:1.14.2
-#         ports:
-#         - containerPort: 80
+{{range $index, $item := .Values.appArray }}
+{{ $appName := printf "app-replica-%d" $index }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $appName }}
+  labels:
+    app: {{ $appName }}
+spec:
+  replicas: 
+  selector:
+    matchLabels:
+      app: {{ $appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ $appName }}
+    spec:
+      containers:
+      - name: {{$appName}}
+        image: nginx:1.14.2
+        ports:
+        - containerPort: {{$item.port}}
+{{ end }}

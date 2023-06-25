@@ -4,3 +4,7 @@ appA:
   enabled: true
 appB:
   enabled: true
+appArray:
+  - port: 8000
+  - port: 8001
+  - port: 8003
