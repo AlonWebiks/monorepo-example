@@ -4,3 +4,7 @@ appA:
   enabled: false
 appB:
   enabled: true
+appArray:
+  - port: 8001
+    ip: "127.0.01"
+  - port: 8004

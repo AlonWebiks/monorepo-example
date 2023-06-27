@@ -4,3 +4,5 @@ appA:
   enabled: true
 appB:
   enabled: true
+
+appArray: []
